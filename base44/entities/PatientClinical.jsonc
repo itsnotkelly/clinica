@@ -1,0 +1,91 @@
+{
+  "name": "PatientClinical",
+  "type": "object",
+  "properties": {
+    "patient_id": {
+      "type": "string"
+    },
+    "allergies": {
+      "type": "string"
+    },
+    "medications": {
+      "type": "string"
+    },
+    "medical_history": {
+      "type": "string"
+    },
+    "dental_notes": {
+      "type": "string"
+    },
+    "observations": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "patient_id"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "dentista"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "asistente"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "dentista"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "asistente"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "dentista"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "asistente"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

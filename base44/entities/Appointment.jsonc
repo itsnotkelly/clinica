@@ -1,0 +1,171 @@
+{
+  "name": "Appointment",
+  "type": "object",
+  "properties": {
+    "patient_id": {
+      "type": "string"
+    },
+    "patient_name": {
+      "type": "string"
+    },
+    "dentist_id": {
+      "type": "string"
+    },
+    "dentist_name": {
+      "type": "string"
+    },
+    "chair": {
+      "type": "string",
+      "description": "Sill\u00f3n / espacio de atenci\u00f3n (preparado)"
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "start_time": {
+      "type": "string",
+      "description": "HH:mm"
+    },
+    "duration_minutes": {
+      "type": "number",
+      "default": 30
+    },
+    "reason": {
+      "type": "string"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "normal",
+        "prioridad",
+        "urgente"
+      ],
+      "default": "normal"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "programada",
+        "llego",
+        "esperando",
+        "en_consulta",
+        "completada",
+        "cancelada",
+        "no_show"
+      ],
+      "default": "programada"
+    },
+    "arrival_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "consult_start_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "rescheduled_count": {
+      "type": "number",
+      "default": 0
+    },
+    "google_event_id": {
+      "type": "string",
+      "description": "ID del evento externo de Google Calendar (preparado)"
+    },
+    "is_demo": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "patient_id",
+    "dentist_id",
+    "date",
+    "start_time"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "recepcion"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "dentista"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "asistente"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "recepcion"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "dentista"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "asistente"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "recepcion"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "dentista"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "asistente"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

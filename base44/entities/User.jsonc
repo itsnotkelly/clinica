@@ -1,0 +1,18 @@
+{
+  "name": "User",
+  "type": "object",
+  "properties": {
+    "role": {
+      "type": "string",
+      "enum": [
+        "admin",
+        "recepcion",
+        "dentista",
+        "asistente",
+        "user"
+      ],
+      "default": "user",
+      "description": "admin=Administrador, recepcion=Recepci\u00f3n, dentista=Dentista, asistente=Asistente, user=Sin rol asignado"
+    }
+  }
+}

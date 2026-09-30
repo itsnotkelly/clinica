@@ -1,0 +1,139 @@
+{
+  "name": "Payment",
+  "type": "object",
+  "properties": {
+    "patient_id": {
+      "type": "string"
+    },
+    "patient_name": {
+      "type": "string"
+    },
+    "appointment_id": {
+      "type": "string",
+      "description": "Cita relacionada (opcional)"
+    },
+    "service": {
+      "type": "string",
+      "description": "Tratamiento o servicio realizado"
+    },
+    "total_price": {
+      "type": "number",
+      "description": "Precio total del servicio"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Monto pagado en este pago"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Fecha del pago"
+    },
+    "method": {
+      "type": "string",
+      "enum": [
+        "efectivo",
+        "tarjeta",
+        "transferencia",
+        "otro"
+      ],
+      "default": "efectivo"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pagado",
+        "parcial",
+        "pendiente"
+      ],
+      "default": "pendiente",
+      "description": "Estado del saldo del servicio"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "receipt_no": {
+      "type": "string",
+      "description": "N\u00famero de recibo interno"
+    },
+    "cancelled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Pago anulado (se conserva el registro)"
+    },
+    "cancel_reason": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "patient_id",
+    "patient_name",
+    "date",
+    "amount",
+    "method"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "dentista"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "recepcion"
+          }
+        }
+      ]
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "dentista"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "recepcion"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "dentista"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "recepcion"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

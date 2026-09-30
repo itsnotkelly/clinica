@@ -1,0 +1,64 @@
+{
+  "name": "AuditLog",
+  "type": "object",
+  "properties": {
+    "action": {
+      "type": "string"
+    },
+    "entity_type": {
+      "type": "string"
+    },
+    "entity_id": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "user_name": {
+      "type": "string"
+    },
+    "user_email": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "action"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "recepcion"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "dentista"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "asistente"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "sin_acceso"
+      }
+    },
+    "delete": false
+  }
+}

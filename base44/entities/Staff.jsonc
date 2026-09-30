@@ -1,0 +1,82 @@
+{
+  "name": "Staff",
+  "type": "object",
+  "properties": {
+    "full_name": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "administrador",
+        "recepcion",
+        "dentista",
+        "asistente"
+      ],
+      "default": "dentista"
+    },
+    "specialty": {
+      "type": "string"
+    },
+    "schedule": {
+      "type": "string",
+      "description": "Horario / disponibilidad"
+    },
+    "email": {
+      "type": "string"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    },
+    "is_demo": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "full_name",
+    "role"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "recepcion"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "dentista"
+          }
+        },
+        {
+          "user_condition": {
+            "role": "asistente"
+          }
+        }
+      ]
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
